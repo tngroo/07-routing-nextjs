@@ -8,10 +8,14 @@ import Modal from "@/components/Modal/Modal";
 import NoteForm from "@/components/NoteForm/NoteForm";
 import { useDebouncedCallback } from "use-debounce";
 import SearchBox from "@/components/SearchBox/SearchBox";
-import css from './[id]/Notes.client.module.css'
+import css from '../../[id]/Notes.client.module.css'
 
+type NotesClientProps = {
+  tag?: string
+}
 
-export default function App(){
+export default function App({tag} :NotesClientProps){
+
 
   const [page, setPage] = useState(1)
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -19,8 +23,8 @@ export default function App(){
   const [inputValue, setInputValue] = useState("");
   const queryClient = useQueryClient()
   const {data, isLoading, isError} = useQuery({
-    queryKey: ["notes", page, search], 
-    queryFn: ()=> fetchNotes({page, query: search}),
+    queryKey: ["notes", page, search, tag], 
+    queryFn: ()=> fetchNotes({page, query: search, tag}),
     placeholderData: keepPreviousData
   })
   const notes = data?.notes ?? [];
@@ -68,6 +72,7 @@ export default function App(){
         ) : (
           <p>No notes found</p>
         )}
+       
 
         {data && data.totalPages > 1 && (
           <Pagination

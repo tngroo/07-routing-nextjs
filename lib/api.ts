@@ -4,12 +4,15 @@ import axios from "axios";
 interface FetchNotesParams{
 query: string;
 page: number;
+tag?: string;
 }
 
 interface FetchNotesResponse {
     notes: Note[];
     totalPages: number;
+    
 }
+
 
 export const api = axios.create({
     baseURL: "https://notehub-public.goit.study/api",
@@ -22,14 +25,15 @@ export const api = axios.create({
 export async function fetchNotes(
   params: FetchNotesParams
 ): Promise<FetchNotesResponse> {
-  const { query, page } = params;
+  const { query, page, tag } = params;
 
   const response = await api.get<FetchNotesResponse>("/notes", {
     params: {
       search: query,
       page,
       perPage: 12,
-      sortBy: "created"
+      sortBy: "created",
+      tag,
     },
     headers: {
       Authorization: `Bearer ${process.env.NEXT_PUBLIC_NOTEHUB_TOKEN}`,
