@@ -34,10 +34,7 @@ export async function fetchNotes(
       perPage: 12,
       sortBy: "created",
       tag,
-    },
-    headers: {
-      Authorization: `Bearer ${process.env.NEXT_PUBLIC_NOTEHUB_TOKEN}`,
-    },
+    }
   });
 
   return response.data;
@@ -50,30 +47,18 @@ export interface CreateNoteParams {
 }
 
 export async function createNote(params: CreateNoteParams): Promise<Note> {
-  const { data } = await api.post<Note>("/notes", params, {
-    headers: {
-      Authorization: `Bearer ${process.env.NEXT_PUBLIC_NOTEHUB_TOKEN}`,
-    },
-  });
+  const { data } = await api.post<Note>("/notes", params);
 
   return data;
 }
 
 export async function deleteNote(id: string): Promise<Note> {
-  const { data } = await api.delete<Note>(`/notes/${id}`, {
-    headers: {
-      Authorization: `Bearer ${process.env.NEXT_PUBLIC_NOTEHUB_TOKEN}`,
-    },
-  });
+  const { data } = await api.delete<Note>(`/notes/${id}`);
 
   return data;
 }
 
 export async function fetchNoteById (id: string): Promise<Note> {
-  const {data} = await api.get<Note>(`/notes/${id}`, {
-    headers: {
-      Authorization: `Bearer ${process.env.NEXT_PUBLIC_NOTEHUB_TOKEN}`,
-    }
-  })
+  const {data} = await api.get<Note>(`/notes/${id}`)
   return data
 }
