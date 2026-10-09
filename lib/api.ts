@@ -69,7 +69,7 @@ export async function deleteNote(id: string): Promise<Note> {
   return data;
 }
 
-export async function fetchNoteById (id: string) {
+export async function fetchNoteById (id: string): Promise<Note> {
   const {data} = await api.get<Note>(`/notes/${id}`, {
     headers: {
       Authorization: `Bearer ${process.env.NEXT_PUBLIC_NOTEHUB_TOKEN}`,

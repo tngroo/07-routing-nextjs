@@ -20,8 +20,9 @@ export default function NotePreviewClient(){
     return (
         <Modal onClose={()=>router.back()}>
             {isLoading && <p>Loading, please wait...</p>} 
-            {isError || !note && <p>Something went wrong.</p>}
-        <main className={css.main}>	
+            {isError && <p>Something went wrong.</p>}
+      {!isLoading && !isError && note &&(
+          <main className={css.main}>	
 	<div className={css.container}>
 		<div className={css.item}>
 		  <div className={css.header}>
@@ -33,6 +34,7 @@ export default function NotePreviewClient(){
 		</div>
 	</div>
 </main>
+      )}
 
         </Modal>
     )
